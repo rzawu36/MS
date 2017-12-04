@@ -15,5 +15,11 @@ namespace MicroService.Controllers
         {
             return OrderDao.GetOrders();
         }
+
+        [Route("api/Order{id}"), HttpGet]
+        public Order GetOrder([FromUri]int id)
+        {
+            return OrderDao.GetOrder(id);
+        }
     }
 }
