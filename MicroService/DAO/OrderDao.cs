@@ -11,6 +11,11 @@ namespace MicroService.DAO
     public class OrderDao
     {
 
+        public static int ReadId(SqlDataReader reader)
+        {
+            return (int)reader["Id"];
+        }
+
         public static Order ReadRow(SqlDataReader reader, string table = "order")
         {
             Order returnOrder = null;
@@ -84,6 +89,47 @@ namespace MicroService.DAO
                 Console.Write(e);
             }
             return null;
+        }
+
+        public static Order CreateOrder(Order order)
+        {
+            int id = 0;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(DBFunctions.ConnectionString))
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandText = String.Format(@"INSERT INTO [order].[Order] (
+                                                [DeliveryAddress],
+                                                    [DeliveryCountry],
+                                                [Note]
+                                                )
+
+                                                values 
+
+                                                (
+                                                @DeliveryAddress,
+                                                @DeliveryCountry,
+                                                @Note)
+                                                SET @Id = SCOPE_IDENTITY();
+                                                Select @Id as [Id]");
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            id = ReadId(reader);
+                        }
+                    }
+                    return GetOrder(id);
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.Write(e);
+            }
         }
     }
 }
