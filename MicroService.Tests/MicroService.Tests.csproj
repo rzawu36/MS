@@ -63,10 +63,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\URISUtil\URISUtil\URISUtil.csproj">
-      <Project>{3dc6a668-783b-4d14-a8b8-2fb1c718f78d}</Project>
-      <Name>URISUtil</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MicroService\MicroService.csproj">
       <Project>{BEB413B0-F485-4A09-A02D-3DBF1A66BFF7}</Project>
       <Name>MicroService</Name>
